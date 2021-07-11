@@ -7,6 +7,7 @@ class CoffeePage extends StatefulWidget {
 
 class _CoffeePageState extends State<CoffeePage> {
   int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     double listItemWidth =
@@ -15,7 +16,7 @@ class _CoffeePageState extends State<CoffeePage> {
       children: [
         Column(
           children: [
-            // HEADER
+            //// HEADER
             Container(
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               color: Colors.white,
@@ -54,43 +55,48 @@ class _CoffeePageState extends State<CoffeePage> {
                 ],
               ),
             ),
-            // LIST OF COFFEE
+            //// LIST OF COFFEE
             Container(
               height: 258,
               width: double.infinity,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Row(
-                    children: mockCoffees
-                        .map((e) => Padding(
-                              padding: EdgeInsets.only(
-                                  left: (e == mockCoffees.first)
-                                      ? defaultMargin
-                                      : 0,
-                                  right: defaultMargin),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Get.to(CoffeeDetailsPage(
-                                      transaction: Transaction(
-                                        coffee: e,
-                                        user: (context.bloc<UserCubit>().state
-                                                as UserLoaded)
-                                            .user,
-                                      ),
-                                      onBackButtonPressed: () {
-                                        Get.back();
-                                      },
-                                    ));
-                                  },
-                                  child: CoffeeCard(e)),
-                            ))
-                        .toList(),
-                  ),
-                ],
+              child: BlocBuilder<CoffeeCubit, CoffeeState>(
+                builder: (_, state) => (state is CoffeeLoaded)
+                    ? ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Row(
+                            children: state.coffees
+                                .map((e) => Padding(
+                                      padding: EdgeInsets.only(
+                                          left: (e == mockCoffees.first)
+                                              ? defaultMargin
+                                              : 0,
+                                          right: defaultMargin),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Get.to(CoffeeDetailsPage(
+                                              transaction: Transaction(
+                                                coffee: e,
+                                                user: (context
+                                                        .bloc<UserCubit>()
+                                                        .state as UserLoaded)
+                                                    .user,
+                                              ),
+                                              onBackButtonPressed: () {
+                                                Get.back();
+                                              },
+                                            ));
+                                          },
+                                          child: CoffeeCard(e)),
+                                    ))
+                                .toList(),
+                          ),
+                        ],
+                      )
+                    : Center(child: loadingIndicator),
               ),
             ),
-            // LIST OF COFFEE (TABS)
+            //// LIST OF COFFEE (TABS)
             Container(
               width: double.infinity,
               color: Colors.white,
@@ -114,42 +120,49 @@ class _CoffeePageState extends State<CoffeePage> {
                   SizedBox(
                     height: 16,
                   ),
-                  Builder(builder: (_) {
-                    List<Coffee> coffees = (selectedIndex == 0)
-                        ? manualBrew
-                        : (selectedIndex == 1)
-                            ? espressoBased
-                            : (selectedIndex == 2)
-                                ? snack
-                                : (selectedIndex == 3)
-                                    ? nonCoffee
-                                    : tea;
-                    return Column(
-                      children: coffees
-                          .map((e) => Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  defaultMargin, 0, defaultMargin, 16),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.to(CoffeeDetailsPage(
-                                    transaction: Transaction(
-                                      coffee: e,
-                                      user: (context.bloc<UserCubit>().state
-                                              as UserLoaded)
-                                          .user,
-                                    ),
-                                    onBackButtonPressed: () {
-                                      Get.back();
+                  BlocBuilder<CoffeeCubit, CoffeeState>(builder: (_, state) {
+                    if (state is CoffeeLoaded) {
+                      List<Coffee> coffees = state.coffees
+                          .where((element) =>
+                              element.types.contains((selectedIndex == 0)
+                                  ? CoffeeType.manualBrew
+                                  : (selectedIndex == 1)
+                                      ? CoffeeType.espressoBased
+                                      : (selectedIndex == 2)
+                                          ? CoffeeType.snack
+                                          : (selectedIndex == 3)
+                                              ? CoffeeType.nonCoffee
+                                              : CoffeeType.tea))
+                          .toList();
+
+                      return Column(
+                        children: coffees
+                            .map((e) => Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      defaultMargin, 0, defaultMargin, 16),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(CoffeeDetailsPage(
+                                        transaction: Transaction(
+                                          coffee: e,
+                                          user: (context.bloc<UserCubit>().state
+                                                  as UserLoaded)
+                                              .user,
+                                        ),
+                                        onBackButtonPressed: () {
+                                          Get.back();
+                                        },
+                                      ));
                                     },
-                                  ));
-                                },
-                                child: CoffeeListItem(
-                                  coffee: e,
-                                  itemWidth: listItemWidth,
-                                ),
-                              )))
-                          .toList(),
-                    );
+                                    child: CoffeeListItem(
+                                        coffee: e, itemWidth: listItemWidth),
+                                  ),
+                                ))
+                            .toList(),
+                      );
+                    } else {
+                      return Center(child: loadingIndicator);
+                    }
                   }),
                 ],
               ),

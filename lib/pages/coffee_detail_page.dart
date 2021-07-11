@@ -41,7 +41,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
               children: [
                 Column(
                   children: [
-                    // onBackPressButton
+                    //// onBackPressButton
                     Container(
                       height: 100,
                       padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -187,7 +187,14 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                                 width: 163,
                                 height: 45,
                                 child: RaisedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.to(PaymentPage(
+                                      transaction: widget.transaction.copyWith(
+                                          quantity: quantity,
+                                          total: quantity *
+                                              widget.transaction.coffee.price),
+                                    ));
+                                  },
                                   color: mainColor,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(

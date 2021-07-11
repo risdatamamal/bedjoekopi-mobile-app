@@ -38,7 +38,7 @@ class _SignInPageState extends State<SignInPage> {
             margin: EdgeInsets.symmetric(horizontal: defaultMargin),
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(color: Colors.black)),
             child: TextField(
               controller: emailController,
@@ -61,9 +61,10 @@ class _SignInPageState extends State<SignInPage> {
             margin: EdgeInsets.symmetric(horizontal: defaultMargin),
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(color: Colors.black)),
             child: TextField(
+              obscureText: true,
               controller: passwordController,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -116,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(24)),
                       color: mainColor,
                       child: Text(
                         'Sign In',
@@ -140,12 +141,36 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(24)),
                       color: greyColor,
                       child: Text(
                         'Create New Account',
                         style: GoogleFonts.poppins(
                             color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                    )),
+          Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 4),
+              height: 45,
+              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+              child: isLoading
+                  ? SpinKitFadingCircle(
+                      size: 45,
+                      color: mainColor,
+                    )
+                  : RaisedButton(
+                      onPressed: () {
+                        Get.to(() => ForgotPasswordPage());
+                      },
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24)),
+                      color: Colors.transparent,
+                      child: Text(
+                        'Forget Password',
+                        style: GoogleFonts.poppins(
+                            color: greyColor, fontWeight: FontWeight.w500),
                       ),
                     )),
         ],

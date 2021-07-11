@@ -78,40 +78,36 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Column(
                     children: ((selectedIndex == 0)
-                            ? [
-                                'Edit Profile',
-                                'Home Address',
-                                'Security',
-                                'Payment'
-                              ]
-                            : [
-                                'Rate App',
-                                'Help Center',
-                                'Privacy & Policy',
-                                'Term & Condition'
-                              ])
+                            ? ['Edit Profile', 'Home Address', 'Payment']
+                            : ['About App', 'Rate App'])
                         .map((e) => Padding(
                               padding: EdgeInsets.only(
                                   bottom: 16,
                                   left: defaultMargin,
                                   right: defaultMargin),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    e,
-                                    style: blackFontStyle3,
-                                  ),
-                                  SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: Image.asset(
-                                      'assets/right_arrow.png',
-                                      fit: BoxFit.contain,
+                              child: GestureDetector(
+                                onTap: () {
+                                  print("Menu ditekan");
+                                  Get.to(AboutPage());
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      e,
+                                      style: blackFontStyle3,
                                     ),
-                                  )
-                                ],
+                                    SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: Image.asset(
+                                        'assets/right_arrow.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ))
                         .toList(),
