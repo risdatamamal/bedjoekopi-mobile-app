@@ -151,6 +151,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: secColor, fontWeight: FontWeight.w500),
                 ),
               )),
+          SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );

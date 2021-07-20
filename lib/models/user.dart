@@ -32,16 +32,15 @@ class User extends Equatable {
         picturePath: data['profile_photo_url'],
       );
 
-  User copyWith({
-    int id,
-    String name,
-    String email,
-    String address,
-    String houseNumber,
-    String phoneNumber,
-    String city,
-    String picturePath,
-  }) =>
+  User copyWith(
+          {int id,
+          String name,
+          String email,
+          String address,
+          String houseNumber,
+          String phoneNumber,
+          String city,
+          String picturePath}) =>
       User(
           id: id ?? this.id,
           name: name ?? this.name,
@@ -53,8 +52,16 @@ class User extends Equatable {
           picturePath: picturePath ?? this.picturePath);
 
   @override
-  List<Object> get props =>
-      [id, name, email, address, houseNumber, phoneNumber, city, picturePath];
+  List<Object> get props => [
+        id,
+        name,
+        email,
+        address,
+        houseNumber,
+        phoneNumber,
+        city,
+        picturePath,
+      ];
 }
 
 User mockUser = User(

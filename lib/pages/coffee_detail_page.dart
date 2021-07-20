@@ -198,7 +198,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                                   color: mainColor,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(24),
                                   ),
                                   child: Text(
                                     'Order Now',

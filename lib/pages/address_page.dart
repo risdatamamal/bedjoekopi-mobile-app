@@ -164,7 +164,7 @@ class _AddressPageState extends State<AddressPage> {
 
                         if (state is UserLoaded) {
                           context.bloc<CoffeeCubit>().getCoffees();
-                          context.bloc<TransactionCubit>().geTransactions();
+                          context.bloc<TransactionCubit>().getTransactions();
                           Get.to(MainPage());
                         } else {
                           Get.snackbar("", "",
@@ -174,7 +174,7 @@ class _AddressPageState extends State<AddressPage> {
                                 color: Colors.white,
                               ),
                               titleText: Text(
-                                "Sign In Failed",
+                                "Sign Up Failed",
                                 style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600),

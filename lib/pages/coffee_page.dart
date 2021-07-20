@@ -68,7 +68,7 @@ class _CoffeePageState extends State<CoffeePage> {
                             children: state.coffees
                                 .map((e) => Padding(
                                       padding: EdgeInsets.only(
-                                          left: (e == mockCoffees.first)
+                                          left: (e == state.coffees.first)
                                               ? defaultMargin
                                               : 0,
                                           right: defaultMargin),

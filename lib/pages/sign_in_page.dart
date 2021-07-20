@@ -91,7 +91,7 @@ class _SignInPageState extends State<SignInPage> {
 
                         if (state is UserLoaded) {
                           context.bloc<CoffeeCubit>().getCoffees();
-                          context.bloc<TransactionCubit>().geTransactions();
+                          context.bloc<TransactionCubit>().getTransactions();
                           Get.to(MainPage());
                         } else {
                           Get.snackbar("", "",
@@ -173,6 +173,9 @@ class _SignInPageState extends State<SignInPage> {
                             color: greyColor, fontWeight: FontWeight.w500),
                       ),
                     )),
+          SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );

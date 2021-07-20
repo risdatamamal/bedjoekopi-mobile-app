@@ -11,7 +11,27 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int selectedPage = 0;
-  String qrCode = 'Unknown';
+
+  Future<void> scanQRCode() async {
+    await FlutterBarcodeScanner.scanBarcode(
+            '#ff6666', 'CANCEL', true, ScanMode.QR)
+        .then((String code) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CoffeeQRDetailsPage(
+                    code: code,
+                    transaction: Transaction(
+                      // coffee: ,
+                      user:
+                          (context.bloc<UserCubit>().state as UserLoaded).user,
+                    ),
+                    onBackButtonPressed: () {
+                      Get.back();
+                    },
+                  )));
+    });
+  }
 
   PageController pageController = PageController(initialPage: 0);
 
@@ -78,19 +98,5 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
-  }
-
-  Future<void> scanQRCode() async {
-    try {
-      final qrCode = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-
-      if (!mounted) return;
-      setState(() {
-        this.qrCode = qrCode;
-      });
-    } on PlatformException {
-      qrCode = 'Failed to get platform version.';
-    }
   }
 }

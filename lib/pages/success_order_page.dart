@@ -1,8 +1,6 @@
 part of 'pages.dart';
 
 class SuccessOrderPage extends StatelessWidget {
-  const SuccessOrderPage({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

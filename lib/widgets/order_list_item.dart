@@ -4,7 +4,7 @@ class OrderListItem extends StatelessWidget {
   final Transaction transaction;
   final double itemWidth;
 
-  OrderListItem({@required this.transaction, this.itemWidth});
+  OrderListItem({@required this.transaction, @required this.itemWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class OrderListItem extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         SizedBox(
-          width: itemWidth - 182, // 60 + 12 + 110
+          width: itemWidth - 182, //60 + 12 + 110
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,10 +34,10 @@ class OrderListItem extends StatelessWidget {
               Text(
                 "${transaction.quantity} item(s) • " +
                     NumberFormat.currency(
-                            symbol: 'Rp ', decimalDigits: 0, locale: 'id-ID')
+                            symbol: 'IDR ', decimalDigits: 0, locale: 'id-ID')
                         .format(transaction.total),
                 style: greyFontStyle.copyWith(fontSize: 13),
-              ),
+              )
             ],
           ),
         ),
@@ -52,7 +52,7 @@ class OrderListItem extends StatelessWidget {
               ),
               (transaction.status == TransactionStatus.cancelled)
                   ? Text(
-                      'Canceled',
+                      'Cancelled',
                       style: GoogleFonts.poppins(
                           color: 'D9435E'.toColor(), fontSize: 10),
                     )
@@ -71,7 +71,7 @@ class OrderListItem extends StatelessWidget {
                           : SizedBox()
             ],
           ),
-        ),
+        )
       ],
     );
   }
@@ -93,7 +93,7 @@ class OrderListItem extends StatelessWidget {
         month = 'Apr';
         break;
       case 5:
-        month = 'Mei';
+        month = 'May';
         break;
       case 6:
         month = 'Jun';
@@ -102,13 +102,13 @@ class OrderListItem extends StatelessWidget {
         month = 'Jul';
         break;
       case 8:
-        month = 'Agt';
+        month = 'Aug';
         break;
       case 9:
         month = 'Sep';
         break;
       case 10:
-        month = 'Okt';
+        month = 'Oct';
         break;
       case 11:
         month = 'Nov';

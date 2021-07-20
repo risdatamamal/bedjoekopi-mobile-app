@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -16,6 +17,8 @@ import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 part 'general_page.dart';
 part 'sign_in_page.dart';
@@ -24,6 +27,7 @@ part 'address_page.dart';
 part 'main_page.dart';
 part 'coffee_page.dart';
 part 'coffee_detail_page.dart';
+part 'coffee_qr_detail_page.dart';
 part 'payment_page.dart';
 part 'illustration_page.dart';
 part 'success_order_page.dart';
@@ -32,3 +36,4 @@ part 'order_history_page.dart';
 part 'profile_page.dart';
 part 'forgot_password_page.dart';
 part 'about_page.dart';
+part 'payment_method_page.dart';

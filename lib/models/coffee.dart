@@ -11,6 +11,7 @@ class Coffee extends Equatable {
   final int price;
   final double rate;
   final List<CoffeeType> types;
+  final String code;
 
   Coffee(
       {this.id,
@@ -20,11 +21,49 @@ class Coffee extends Equatable {
       this.categories,
       this.price,
       this.rate,
-      this.types = const []});
+      this.types = const [],
+      this.code});
+
+  factory Coffee.fromJson(Map<String, dynamic> data) => Coffee(
+      id: data['id'],
+      picturePath: data['picturePath'],
+      name: data['name'],
+      description: data['description'],
+      categories: data['categories'],
+      price: data['price'],
+      rate: (data['rate'] as num).toDouble(),
+      types: data['types'].toString().split(',').map((e) {
+        switch (e) {
+          case 'manualBrew':
+            return CoffeeType.manualBrew;
+            break;
+          case 'espressoBased':
+            return CoffeeType.espressoBased;
+            break;
+          case 'snack':
+            return CoffeeType.snack;
+            break;
+          case 'nonCoffee':
+            return CoffeeType.nonCoffee;
+            break;
+          default:
+            return CoffeeType.tea;
+        }
+      }).toList(),
+      code: data['code']);
 
   @override
-  List<Object> get props =>
-      [id, picturePath, name, description, categories, price, rate, types];
+  List<Object> get props => [
+        id,
+        picturePath,
+        name,
+        description,
+        categories,
+        price,
+        rate,
+        types,
+        code
+      ];
 }
 
 List<Coffee> mockCoffees = [

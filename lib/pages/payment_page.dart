@@ -10,6 +10,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
+  TextEditingController descController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -356,6 +357,32 @@ class _PaymentPageState extends State<PaymentPage> {
                         )),
                   ],
                 ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width / 2 -
+                            defaultMargin -
+                            5,
+                        child: Text(
+                          'Description',
+                          style: greyFontStyle,
+                        )),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 -
+                          defaultMargin -
+                          5,
+                      child: TextField(
+                        controller: descController,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintStyle: greyFontStyle,
+                            hintText: 'Type if your dine in or -'),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 6,
                 ),
@@ -373,15 +400,16 @@ class _PaymentPageState extends State<PaymentPage> {
                               isLoading = true;
                             });
 
-                            bool result = await context
+                            String paymentURL = await context
                                 .bloc<TransactionCubit>()
                                 .submitTransaction(widget.transaction.copyWith(
+                                    description: descController.text,
                                     dateTime: DateTime.now(),
                                     total: (widget.transaction.total * 1.1)
                                             .toInt() +
                                         5000));
-                            if (result == true) {
-                              Get.to(SuccessOrderPage());
+                            if (paymentURL != null) {
+                              Get.to(PaymentMethodPage(paymentURL));
                             } else {
                               setState(() {
                                 isLoading = false;

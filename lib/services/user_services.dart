@@ -60,8 +60,7 @@ class UserServices {
       ApiReturnValue<String> result = await uploadProfilePicture(pictureFile);
       if (result.value != null) {
         value = value.copyWith(
-            picturePath:
-                "http://297e3b1613ff.ngrok.io/storage/" + result.value);
+            picturePath: "http://192.168.0.14:8000/storage/" + result.value);
       }
     }
 
