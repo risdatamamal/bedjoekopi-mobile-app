@@ -89,14 +89,14 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 60, right: 10),
-        child: FloatingActionButton(
-          onPressed: () => scanQRCode(),
-          child: const Icon(MdiIcons.qrcode),
-          backgroundColor: mainColor,
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: EdgeInsets.only(bottom: 60, right: 10),
+      //   child: FloatingActionButton(
+      //     onPressed: () => scanQRCode(),
+      //     child: const Icon(MdiIcons.qrcode),
+      //     backgroundColor: mainColor,
+      //   ),
+      // ),
     );
   }
 }
