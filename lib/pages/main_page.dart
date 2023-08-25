@@ -16,20 +16,28 @@ class _MainPageState extends State<MainPage> {
     await FlutterBarcodeScanner.scanBarcode(
             '#ff6666', 'CANCEL', true, ScanMode.QR)
         .then((String code) {
-      Navigator.push(
+      //    if cancel button is pressed
+      if (code != '-1') {
+        Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => CoffeeQRDetailsPage(
-                    code: code,
-                    transaction: Transaction(
-                      // coffee: ,
-                      user:
-                          (context.bloc<UserCubit>().state as UserLoaded).user,
-                    ),
-                    onBackButtonPressed: () {
-                      Get.back();
-                    },
-                  )));
+            builder: (context) => CoffeeQRDetailsPage(
+              code: code,
+              transaction: Transaction(
+                // coffee: ,
+                user: (context.read<UserCubit>().state as UserLoaded).user,
+              ),
+              onBackButtonPressed: () {
+                Get.back();
+              },
+            ),
+          ),
+        );
+      } else {
+        Get.snackbar('Cancel', 'Anda membatalkan scan QR');
+      }
+    }).catchError((onError) {
+      Get.snackbar('Error', onError.toString());
     });
   }
 
@@ -89,14 +97,14 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      // floatingActionButton: Padding(
-      //   padding: EdgeInsets.only(bottom: 60, right: 10),
-      //   child: FloatingActionButton(
-      //     onPressed: () => scanQRCode(),
-      //     child: const Icon(MdiIcons.qrcode),
-      //     backgroundColor: mainColor,
-      //   ),
-      // ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 60, right: 10),
+        child: FloatingActionButton(
+          onPressed: () => scanQRCode(),
+          child: const Icon(MdiIcons.qrcode),
+          backgroundColor: mainColor,
+        ),
+      ),
     );
   }
 }

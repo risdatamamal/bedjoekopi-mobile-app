@@ -1,7 +1,7 @@
-import 'package:coffeeshop/cubit/coffee_cubit.dart';
-import 'package:coffeeshop/cubit/transaction_cubit.dart';
-import 'package:coffeeshop/cubit/user_cubit.dart';
-import 'package:coffeeshop/pages/pages.dart';
+import 'package:bedjoekopi/cubit/coffee_cubit.dart';
+import 'package:bedjoekopi/cubit/transaction_cubit.dart';
+import 'package:bedjoekopi/cubit/user_cubit.dart';
+import 'package:bedjoekopi/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';

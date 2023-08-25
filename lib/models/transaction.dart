@@ -3,26 +3,26 @@ part of 'models.dart';
 enum TransactionStatus { delivered, on_delivery, pending, cancelled }
 
 class Transaction extends Equatable {
-  final int id;
-  final Coffee coffee;
-  final int quantity;
-  final int total;
-  final String description;
-  final DateTime dateTime;
-  final TransactionStatus status;
-  final User user;
-  final String paymentUrl;
+  final int? id;
+  final Coffee? coffee;
+  final int? quantity;
+  final int? total;
+  final String? description;
+  final DateTime? dateTime;
+  final TransactionStatus? status;
+  final User? user;
+  final Uri? paymentUrl;
 
   Transaction(
       {this.id,
-      this.coffee,
-      this.quantity,
-      this.total,
-      this.description,
-      this.dateTime,
-      this.status,
-      this.user,
-      this.paymentUrl});
+        this.coffee,
+        this.quantity,
+        this.total,
+        this.description,
+        this.dateTime,
+        this.status,
+        this.user,
+        this.paymentUrl});
 
   factory Transaction.fromJson(Map<String, dynamic> data) => Transaction(
       id: data['id'],
@@ -41,14 +41,14 @@ class Transaction extends Equatable {
       paymentUrl: data['payment_url']);
 
   Transaction copyWith({
-    int id,
-    Coffee coffee,
-    int quantity,
-    int total,
-    String description,
-    DateTime dateTime,
-    TransactionStatus status,
-    User user,
+    int? id,
+    Coffee? coffee,
+    int? quantity,
+    int? total,
+    String? description,
+    DateTime? dateTime,
+    TransactionStatus? status,
+    User? user,
   }) {
     return Transaction(
         id: id ?? this.id,
@@ -63,35 +63,43 @@ class Transaction extends Equatable {
 
   @override
   List<Object> get props =>
-      [id, coffee, quantity, total, description, dateTime, status, user];
+      [
+        id ?? 0,
+        coffee ?? '',
+        quantity ?? 0,
+        total ?? 0,
+        description ?? '',
+        dateTime ?? DateTime.now(),
+        status ?? TransactionStatus.pending,
+        user ?? ''];
 }
 
-// List<Transaction> mockTransactions = [
-//   Transaction(
-//     id: 1,
-//     coffee: mockCoffees[1],
-//     quantity: 10,
-//     total: (mockCoffees[1].price * 10 * 1.1).round() + 9000,
-//     dateTime: DateTime.now(),
-//     status: TransactionStatus.on_delivery,
-//     user: mockUser,
-//   ),
-//   Transaction(
-//     id: 2,
-//     coffee: mockCoffees[7],
-//     quantity: 7,
-//     total: (mockCoffees[7].price * 7 * 1.1).round() + 9000,
-//     dateTime: DateTime.now(),
-//     status: TransactionStatus.delivered,
-//     user: mockUser,
-//   ),
-//   Transaction(
-//     id: 3,
-//     coffee: mockCoffees[18],
-//     quantity: 4,
-//     total: (mockCoffees[18].price * 4 * 1.1).round() + 9000,
-//     dateTime: DateTime.now(),
-//     status: TransactionStatus.cancelled,
-//     user: mockUser,
-//   ),
-// ];
+List<Transaction> mockTransactions = [
+  Transaction(
+    id: 1,
+    coffee: mockCoffees[1],
+    quantity: 10,
+    total: (mockCoffees[1].price * 10 * 1.1).round() + 9000,
+    dateTime: DateTime.now(),
+    status: TransactionStatus.on_delivery,
+    user: mockUser,
+  ),
+  Transaction(
+    id: 2,
+    coffee: mockCoffees[7],
+    quantity: 7,
+    total: (mockCoffees[7].price * 7 * 1.1).round() + 9000,
+    dateTime: DateTime.now(),
+    status: TransactionStatus.delivered,
+    user: mockUser,
+  ),
+  Transaction(
+    id: 3,
+    coffee: mockCoffees[18],
+    quantity: 4,
+    total: (mockCoffees[18].price * 4 * 1.1).round() + 9000,
+    dateTime: DateTime.now(),
+    status: TransactionStatus.cancelled,
+    user: mockUser,
+  ),
+];

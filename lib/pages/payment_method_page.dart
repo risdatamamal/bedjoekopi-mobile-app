@@ -1,7 +1,7 @@
 part of 'pages.dart';
 
 class PaymentMethodPage extends StatelessWidget {
-  final String paymentURL;
+  final Uri paymentURL;
 
   PaymentMethodPage(this.paymentURL);
 
@@ -14,7 +14,7 @@ class PaymentMethodPage extends StatelessWidget {
         subtitle: "Please select your favorite\npayment method",
         picturePath: 'assets/payment.png',
         buttonTap1: () async {
-          await launch(paymentURL);
+          await launchUrl(paymentURL);
         },
         buttonTitle1: 'Payment Method',
         buttonTap2: () {

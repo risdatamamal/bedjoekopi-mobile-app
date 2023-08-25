@@ -5,17 +5,17 @@ class IllustrationPage extends StatelessWidget {
   final String subtitle;
   final String picturePath;
   final String buttonTitle1;
-  final String buttonTitle2;
-  final Function buttonTap1;
-  final Function buttonTap2;
+  final String? buttonTitle2;
+  final Function() buttonTap1;
+  final Function()? buttonTap2;
 
   IllustrationPage(
-      {@required this.title,
-      @required this.subtitle,
-      @required this.picturePath,
-      @required this.buttonTap1,
+      {required this.title,
+      required this.subtitle,
+      required this.picturePath,
+      required this.buttonTap1,
       this.buttonTap2,
-      @required this.buttonTitle1,
+      required this.buttonTitle1,
       this.buttonTitle2});
 
   @override
@@ -47,12 +47,13 @@ class IllustrationPage extends StatelessWidget {
             margin: EdgeInsets.only(top: 30, bottom: 12),
             width: 200,
             height: 45,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: buttonTap1,
-              color: mainColor,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24)),
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24)),
+                  backgroundColor: mainColor),
               child: Text(
                 buttonTitle1,
                 style: blackFontStyle3.copyWith(fontWeight: FontWeight.w500),
@@ -64,12 +65,13 @@ class IllustrationPage extends StatelessWidget {
               : SizedBox(
                   width: 200,
                   height: 45,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: buttonTap2,
-                    color: '8D92A3'.toColor(),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24)),
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        backgroundColor: mainColor),
                     child: Text(
                       buttonTitle2 ?? 'title',
                       style: blackFontStyle3.copyWith(

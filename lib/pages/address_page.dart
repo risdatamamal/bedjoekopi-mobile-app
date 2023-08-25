@@ -16,15 +16,15 @@ class _AddressPageState extends State<AddressPage> {
   TextEditingController addressController = TextEditingController();
   TextEditingController houseController = TextEditingController();
   bool isLoading = false;
-  List<String> cities;
-  String selectedCity;
+  List<String>? cities;
+  String? selectedCity;
 
   @override
   initState() {
     super.initState();
 
     cities = ['Bandung', 'Jakarta', 'Surabaya'];
-    selectedCity = cities[0];
+    selectedCity = cities?[0];
   }
 
   Widget build(BuildContext context) {
@@ -125,7 +125,7 @@ class _AddressPageState extends State<AddressPage> {
                 isExpanded: true,
                 underline: SizedBox(),
                 items: cities
-                    .map((e) => DropdownMenuItem(
+                    ?.map((e) => DropdownMenuItem(
                         value: e,
                         child: Text(
                           e,
@@ -134,7 +134,7 @@ class _AddressPageState extends State<AddressPage> {
                     .toList(),
                 onChanged: (item) {
                   setState(() {
-                    selectedCity = item;
+                    selectedCity = item.toString();
                   });
                 }),
           ),
@@ -145,26 +145,27 @@ class _AddressPageState extends State<AddressPage> {
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               child: (isLoading == true)
                   ? Center(child: loadingIndicator)
-                  : RaisedButton(
+                  // Ubahlah RaisedButton menjadi ElevatedButton dibawah ini:
+                  : ElevatedButton(
                       onPressed: () async {
                         User user = widget.user.copyWith(
                             phoneNumber: phoneController.text,
                             address: addressController.text,
                             houseNumber: houseController.text,
-                            city: selectedCity);
+                            city: selectedCity ?? '');
                         setState(() {
                           isLoading = true;
                         });
 
-                        await context.bloc<UserCubit>().signUp(
+                        await context.read<UserCubit>().signUp(
                             user, widget.password,
                             pictureFile: widget.pictureFile);
 
-                        UserState state = context.bloc<UserCubit>().state;
+                        UserState state = context.read<UserCubit>().state;
 
                         if (state is UserLoaded) {
-                          context.bloc<CoffeeCubit>().getCoffees();
-                          context.bloc<TransactionCubit>().getTransactions();
+                          context.read<CoffeeCubit>().getCoffees();
+                          context.read<TransactionCubit>().getTransactions();
                           Get.to(MainPage());
                         } else {
                           Get.snackbar("", "",
@@ -188,10 +189,11 @@ class _AddressPageState extends State<AddressPage> {
                           });
                         }
                       },
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24)),
-                      color: mainColor,
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)),
+                          backgroundColor: mainColor),
                       child: Text(
                         'Sign Up Now',
                         style: GoogleFonts.poppins(

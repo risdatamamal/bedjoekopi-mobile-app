@@ -37,35 +37,35 @@ class _ProfilePageState extends State<ProfilePage> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: NetworkImage((context
-                                        .bloc<UserCubit>()
+                                        .read<UserCubit>()
                                         .state as UserLoaded)
                                     .user
-                                    .picturePath),
+                                    .picturePath ?? ''),
                                 fit: BoxFit.cover)),
                       ),
                     ),
                     Text(
-                      (context.bloc<UserCubit>().state as UserLoaded).user.name,
+                      (context.read<UserCubit>().state as UserLoaded).user.name ?? '',
                       style: GoogleFonts.poppins(
                           fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      (context.bloc<UserCubit>().state as UserLoaded)
+                      (context.read<UserCubit>().state as UserLoaded)
                           .user
-                          .email,
+                          .email ?? '',
                       style:
                           greyFontStyle.copyWith(fontWeight: FontWeight.w300),
                     )
                   ],
                 )),
-            //// Body
+            // TODO: Body
             Container(
               width: double.infinity,
               color: Colors.white,
               child: Column(
                 children: [
                   CustomTabBar(
-                    titles: ["Account", "Bedjo Kopi"],
+                    titles: ["Account", "Bedjokopi"],
                     selectedIndex: selectedIndex,
                     onTap: (index) {
                       setState(() {
@@ -88,7 +88,18 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: GestureDetector(
                                 onTap: () {
                                   print("Menu ditekan");
-                                  Get.to(AboutPage());
+                                  // Buatkan kode untuk tiap list menu account dan bedjokopi menuju ke halaman yang berbeda bedasarkan nama menu
+                                  if (e == "Edit Profile") {
+                                    Get.snackbar('Edit Profile', 'Anda menekan edit profile');
+                                  } else if (e == "Home Address") {
+                                    Get.snackbar('Home Address', 'Anda menekan home address');
+                                  } else if (e == "Payment") {
+                                    Get.snackbar('Payment', 'Anda menekan payment');
+                                  } else if (e == "About App") {
+                                    Get.to(AboutPage());
+                                  } else if (e == "Rate App") {
+                                    Get.snackbar('Rate App', 'Anda menekan rate app');
+                                  };
                                 },
                                 child: Row(
                                   mainAxisAlignment:

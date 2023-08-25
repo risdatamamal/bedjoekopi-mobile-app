@@ -1,7 +1,7 @@
 part of 'pages.dart';
 
 class PaymentPage extends StatefulWidget {
-  final Transaction transaction;
+  final Transaction? transaction;
 
   PaymentPage({this.transaction});
 
@@ -53,7 +53,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
                                   image: NetworkImage(
-                                      widget.transaction.coffee.picturePath),
+                                      widget.transaction!.coffee!.picturePath),
                                   fit: BoxFit.cover)),
                         ),
                         Column(
@@ -66,7 +66,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               // 12 - (jarak picture ke title),
                               // 78, (lebar jumlah items),
                               child: Text(
-                                widget.transaction.coffee.name,
+                                widget.transaction!.coffee!.name,
                                 style: blackFontStyle2,
                                 maxLines: 1,
                                 overflow: TextOverflow.clip,
@@ -77,14 +77,14 @@ class _PaymentPageState extends State<PaymentPage> {
                                   locale: 'id-ID',
                                   symbol: 'Rp',
                                   decimalDigits: 0,
-                                ).format(widget.transaction.coffee.price),
+                                ).format(widget.transaction!.coffee!.price),
                                 style: greyFontStyle.copyWith(fontSize: 13)),
                           ],
                         ),
                       ],
                     ),
                     Text(
-                      '${widget.transaction.quantity} item(s)',
+                      '${widget.transaction!.quantity} item(s)',
                       style: greyFontStyle.copyWith(fontSize: 13),
                     ),
                   ],
@@ -108,7 +108,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.coffee.name,
+                          widget.transaction!.coffee!.name,
                           style: greyFontStyle,
                         )),
                     SizedBox(
@@ -120,7 +120,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             locale: 'id-ID',
                             symbol: 'Rp ',
                             decimalDigits: 0,
-                          ).format(widget.transaction.total),
+                          ).format(widget.transaction!.total),
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -180,7 +180,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             locale: 'id-ID',
                             symbol: 'Rp ',
                             decimalDigits: 0,
-                          ).format(widget.transaction.total * 10 / 100),
+                          ).format(widget.transaction!.total! * 10 / 100),
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -210,7 +210,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             locale: 'id-ID',
                             symbol: 'Rp ',
                             decimalDigits: 0,
-                          ).format(widget.transaction.total * 1.1 + 5000),
+                          ).format(widget.transaction!.total! * 1.1 + 5000),
                           style: blackFontStyle3.copyWith(
                               fontWeight: FontWeight.w500,
                               color: '1ABC9C'.toColor()),
@@ -247,7 +247,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.user.name,
+                          widget.transaction!.user!.name!,
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -273,7 +273,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.user.phoneNumber,
+                          widget.transaction!.user!.phoneNumber!,
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -299,7 +299,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.user.address,
+                          widget.transaction!.user!.address!,
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -325,7 +325,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.user.houseNumber,
+                          widget.transaction!.user!.houseNumber!,
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -351,7 +351,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.user.city,
+                          widget.transaction!.user!.city!,
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         )),
@@ -394,18 +394,18 @@ class _PaymentPageState extends State<PaymentPage> {
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         height: 45,
                         width: double.infinity,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () async {
                             setState(() {
                               isLoading = true;
                             });
 
-                            String paymentURL = await context
-                                .bloc<TransactionCubit>()
-                                .submitTransaction(widget.transaction.copyWith(
+                            Uri? paymentURL = await context
+                                .read<TransactionCubit>()
+                                .submitTransaction(widget.transaction!.copyWith(
                                     description: descController.text,
                                     dateTime: DateTime.now(),
-                                    total: (widget.transaction.total * 1.1)
+                                    total: (widget.transaction!.total! * 1.1)
                                             .toInt() +
                                         5000));
                             if (paymentURL != null) {
@@ -431,11 +431,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ));
                             }
                           },
-                          color: mainColor,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
-                          ),
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24)),
+                              backgroundColor: mainColor),
                           child: Text(
                             'Checkout Now',
                             style: blackFontStyle3.copyWith(

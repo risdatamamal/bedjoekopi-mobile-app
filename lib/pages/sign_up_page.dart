@@ -6,8 +6,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  User user;
-  File pictureFile;
+  User? user;
+  File? pictureFile;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -25,8 +25,8 @@ class _SignUpPageState extends State<SignUpPage> {
         children: [
           GestureDetector(
             onTap: () async {
-              PickedFile pickedFile =
-                  await ImagePicker().getImage(source: ImageSource.gallery);
+              XFile? pickedFile =
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
               if (pickedFile != null) {
                 pictureFile = File(pickedFile.path);
                 setState(() {});
@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: FileImage(pictureFile),
+                              image: FileImage(pictureFile!),
                               fit: BoxFit.cover)),
                     )
                   : Container(
@@ -132,19 +132,20 @@ class _SignUpPageState extends State<SignUpPage> {
               margin: EdgeInsets.only(top: 24),
               height: 45,
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Get.to(AddressPage(
                       User(
                           name: nameController.text,
                           email: emailController.text),
                       passwordController.text,
-                      pictureFile));
+                      pictureFile ?? File('assets/photo.png')));
                 },
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)),
-                color: mainColor,
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                    backgroundColor: mainColor),
                 child: Text(
                   'Continue',
                   style: GoogleFonts.poppins(

@@ -46,12 +46,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               margin: EdgeInsets.only(top: 24),
               height: 45,
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {},
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)),
-                color: mainColor,
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                    backgroundColor: mainColor),
                 child: Text(
                   'Resend by email address',
                   style: GoogleFonts.poppins(

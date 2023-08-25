@@ -4,7 +4,7 @@ class OrderListItem extends StatelessWidget {
   final Transaction transaction;
   final double itemWidth;
 
-  OrderListItem({@required this.transaction, @required this.itemWidth});
+  OrderListItem({required this.transaction, required this.itemWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class OrderListItem extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               image: DecorationImage(
-                  image: NetworkImage(transaction.coffee.picturePath),
+                  image: NetworkImage(transaction.coffee!.picturePath),
                   fit: BoxFit.cover)),
         ),
         SizedBox(
@@ -26,7 +26,7 @@ class OrderListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                transaction.coffee.name,
+                transaction.coffee!.name,
                 style: blackFontStyle2,
                 maxLines: 1,
                 overflow: TextOverflow.clip,
@@ -47,7 +47,7 @@ class OrderListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                convertDateTime(transaction.dateTime),
+                convertDateTime(transaction.dateTime!),
                 style: greyFontStyle.copyWith(fontSize: 12),
               ),
               (transaction.status == TransactionStatus.cancelled)

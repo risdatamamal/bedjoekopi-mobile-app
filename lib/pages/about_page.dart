@@ -4,7 +4,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      title: "About Bedjoe Kopi",
+      title: "About Bedjoekopi",
       subtitle: "ringkasan mengenai aplikasi",
       onBackButtonPressed: () {
         Get.back();

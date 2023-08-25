@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:coffeeshop/models/models.dart';
+import 'package:bedjoekopi/models/models.dart';
 import 'package:http/http.dart' as http;
 
 part 'user_services.dart';

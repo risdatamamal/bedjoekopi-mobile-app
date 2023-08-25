@@ -11,18 +11,18 @@ class Coffee extends Equatable {
   final int price;
   final double rate;
   final List<CoffeeType> types;
-  final String code;
+  final String? code;
 
   Coffee(
-      {this.id,
-      this.picturePath,
-      this.name,
-      this.description,
-      this.categories,
-      this.price,
-      this.rate,
-      this.types = const [],
-      this.code});
+      {required this.id,
+        required this.picturePath,
+        required this.name,
+        required this.description,
+        required this.categories,
+        required this.price,
+        required this.rate,
+        this.types = const [],
+        this.code});
 
   factory Coffee.fromJson(Map<String, dynamic> data) => Coffee(
       id: data['id'],
@@ -36,16 +36,12 @@ class Coffee extends Equatable {
         switch (e) {
           case 'manualBrew':
             return CoffeeType.manualBrew;
-            break;
           case 'espressoBased':
             return CoffeeType.espressoBased;
-            break;
           case 'snack':
             return CoffeeType.snack;
-            break;
           case 'nonCoffee':
             return CoffeeType.nonCoffee;
-            break;
           default:
             return CoffeeType.tea;
         }
@@ -62,7 +58,7 @@ class Coffee extends Equatable {
         price,
         rate,
         types,
-        code
+        code ?? ""
       ];
 }
 

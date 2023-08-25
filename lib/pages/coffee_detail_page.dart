@@ -1,8 +1,8 @@
 part of 'pages.dart';
 
 class CoffeeDetailsPage extends StatefulWidget {
-  final Function onBackButtonPressed;
-  final Transaction transaction;
+  final Function? onBackButtonPressed;
+  final Transaction? transaction;
 
   CoffeeDetailsPage({this.onBackButtonPressed, this.transaction});
 
@@ -32,7 +32,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image:
-                          NetworkImage(widget.transaction.coffee.picturePath),
+                          NetworkImage(widget.transaction!.coffee!.picturePath),
                       fit: BoxFit.cover)),
             ),
           ),
@@ -50,7 +50,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                         child: GestureDetector(
                           onTap: () {
                             if (widget.onBackButtonPressed != null) {
-                              widget.onBackButtonPressed();
+                              widget.onBackButtonPressed!();
                             }
                           },
                           child: Container(
@@ -90,12 +90,12 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                                     width: MediaQuery.of(context).size.width -
                                         134, // 32 + 102
                                     child: Text(
-                                      widget.transaction.coffee.name,
+                                      widget.transaction!.coffee!.name,
                                       style: blackFontStyle2,
                                     ),
                                   ),
                                   SizedBox(height: 6),
-                                  RatingStars(widget.transaction.coffee.rate),
+                                  RatingStars(widget.transaction!.coffee!.rate),
                                 ],
                               ),
                               Row(
@@ -151,14 +151,14 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 14, 0, 16),
                             child: Text(
-                              widget.transaction.coffee.description,
+                              widget.transaction!.coffee!.description,
                               style: greyFontStyle,
                             ),
                           ),
                           Text('Categories', style: blackFontStyle3),
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 4, 0, 41),
-                            child: Text(widget.transaction.coffee.categories,
+                            child: Text(widget.transaction!.coffee!.categories,
                                 style: greyFontStyle),
                           ),
                           Row(
@@ -177,7 +177,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                                       symbol: 'Rp',
                                       decimalDigits: 0,
                                     ).format(quantity *
-                                        widget.transaction.coffee.price),
+                                        widget.transaction!.coffee!.price),
                                     style:
                                         blackFontStyle2.copyWith(fontSize: 18),
                                   ),
@@ -186,20 +186,21 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                               SizedBox(
                                 width: 163,
                                 height: 45,
-                                child: RaisedButton(
+                                // Ubahlah RaisedButton menjadi ElevatedButton dibawah ini:
+                                child: ElevatedButton(
                                   onPressed: () {
                                     Get.to(PaymentPage(
-                                      transaction: widget.transaction.copyWith(
+                                      transaction: widget.transaction!.copyWith(
                                           quantity: quantity,
                                           total: quantity *
-                                              widget.transaction.coffee.price),
+                                              widget.transaction!.coffee!.price),
                                     ));
                                   },
-                                  color: mainColor,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(24)),
+                                      backgroundColor: mainColor),
                                   child: Text(
                                     'Order Now',
                                     style: blackFontStyle3.copyWith(

@@ -1,10 +1,10 @@
 part of 'pages.dart';
 
 class CoffeeQRDetailsPage extends StatefulWidget {
-  final Function onBackButtonPressed;
-  final Transaction transaction;
+  final Function? onBackButtonPressed;
+  final Transaction? transaction;
 
-  final String code;
+  final String? code;
 
   CoffeeQRDetailsPage({this.onBackButtonPressed, this.transaction, this.code});
 
@@ -32,7 +32,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
   // }
 
   Future<ApiReturnValue<List<Coffee>>> getCoffeeCode(
-      {http.Client client}) async {
+      {http.Client? client}) async {
     client ??= http.Client();
 
     String url = "http://192.168.0.14:8000/api/coffee?code=${widget.code}";
@@ -40,7 +40,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
     var response = await client.get(Uri.parse(url));
 
     if (response.statusCode != 200) {
-      return ApiReturnValue(message: 'Please try again');
+      return ApiReturnValue(message: 'Please try again', value: []);
     }
     var data = jsonDecode(response.body);
 
@@ -48,7 +48,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
         .map((e) => Coffee.fromJson(e))
         .toList();
 
-    return ApiReturnValue(value: coffees);
+    return ApiReturnValue(value: coffees, message: 'Success');
   }
 
   @override
@@ -61,14 +61,8 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: coffees == null
-            ? Center(
-                child: Text(
-                  "MENU TIDAK DITEMUKAN, ${widget.code}",
-                  style: blackFontStyle1,
-                ),
-              )
-            : Stack(
+        child: coffees.isNotEmpty
+            ? Stack(
                 children: [
                   Container(
                     color: mainColor,
@@ -84,7 +78,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: NetworkImage(
-                                  widget.transaction.coffee.picturePath),
+                                  widget.transaction!.coffee!.picturePath),
                               fit: BoxFit.cover)),
                     ),
                   ),
@@ -103,7 +97,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                                 child: GestureDetector(
                                   onTap: () {
                                     if (widget.onBackButtonPressed != null) {
-                                      widget.onBackButtonPressed();
+                                      widget.onBackButtonPressed!();
                                     }
                                   },
                                   child: Container(
@@ -148,13 +142,13 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                                                     .width -
                                                 134, // 32 + 102
                                             child: Text(
-                                              widget.transaction.coffee.name,
+                                              widget.transaction!.coffee!.name,
                                               style: blackFontStyle2,
                                             ),
                                           ),
                                           SizedBox(height: 6),
                                           RatingStars(
-                                              widget.transaction.coffee.rate),
+                                              widget.transaction!.coffee!.rate),
                                         ],
                                       ),
                                       Row(
@@ -213,7 +207,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                                   Container(
                                     margin: EdgeInsets.fromLTRB(0, 14, 0, 16),
                                     child: Text(
-                                      widget.transaction.coffee.description,
+                                      widget.transaction!.coffee!.description,
                                       style: greyFontStyle,
                                     ),
                                   ),
@@ -221,7 +215,7 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                                   Container(
                                     margin: EdgeInsets.fromLTRB(0, 4, 0, 41),
                                     child: Text(
-                                        widget.transaction.coffee.categories,
+                                        widget.transaction!.coffee!.categories,
                                         style: greyFontStyle),
                                   ),
                                   Row(
@@ -243,8 +237,8 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                                               symbol: 'Rp',
                                               decimalDigits: 0,
                                             ).format(quantity *
-                                                widget
-                                                    .transaction.coffee.price),
+                                                widget.transaction!.coffee!
+                                                    .price),
                                             style: blackFontStyle2.copyWith(
                                                 fontSize: 18),
                                           ),
@@ -253,23 +247,24 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                                       SizedBox(
                                         width: 163,
                                         height: 45,
-                                        child: RaisedButton(
+                                        child: ElevatedButton(
                                           onPressed: () {
                                             Get.to(PaymentPage(
-                                              transaction: widget.transaction
+                                              transaction: widget.transaction!
                                                   .copyWith(
                                                       quantity: quantity,
                                                       total: quantity *
-                                                          widget.transaction
-                                                              .coffee.price),
+                                                          widget.transaction!
+                                                              .coffee!.price),
                                             ));
                                           },
-                                          color: mainColor,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(24),
-                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          24)),
+                                              backgroundColor: mainColor),
                                           child: Text(
                                             'Order Now',
                                             style: blackFontStyle3.copyWith(
@@ -288,6 +283,12 @@ class _CoffeeQRDetailsPageState extends State<CoffeeQRDetailsPage> {
                     ),
                   ),
                 ],
+              )
+            : Center(
+                child: Text(
+                  "Menu Not Found, ${widget.code}",
+                  style: blackFontStyle1,
+                ),
               ),
       ),
     );

@@ -2,10 +2,10 @@ part of 'widgets.dart';
 
 class CustomTabBar extends StatelessWidget {
   final int selectedIndex;
-  final List<String> titles;
-  final Function(int) onTap;
+  final List<String>? titles;
+  final Function(int)? onTap;
 
-  CustomTabBar({@required this.selectedIndex, this.titles, this.onTap});
+  CustomTabBar({required this.selectedIndex, this.titles, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CustomTabBar extends StatelessWidget {
             children: [
               Row(
                 children: titles
-                    .map((e) => Padding(
+                    !.map((e) => Padding(
                           padding: EdgeInsets.only(
                               left: defaultMargin, right: defaultMargin),
                           child: Column(
@@ -32,12 +32,12 @@ class CustomTabBar extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {
                                   if (onTap != null) {
-                                    onTap(titles.indexOf(e));
+                                    onTap!(titles!.indexOf(e));
                                   }
                                 },
                                 child: Text(
                                   e,
-                                  style: (titles.indexOf(e) == selectedIndex)
+                                  style: (titles!.indexOf(e) == selectedIndex)
                                       ? blackFontStyle2.copyWith(
                                           fontWeight: FontWeight.w500)
                                       : greyFontStyle,
@@ -49,7 +49,7 @@ class CustomTabBar extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 13),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(1.5),
-                                  color: (titles.indexOf(e) == selectedIndex)
+                                  color: (titles!.indexOf(e) == selectedIndex)
                                       ? "020202".toColor()
                                       : Colors.transparent,
                                 ),

@@ -1,5 +1,5 @@
-import 'package:coffeeshop/models/models.dart';
-import 'package:coffeeshop/services/services.dart';
+import 'package:bedjoekopi/models/models.dart';
+import 'package:bedjoekopi/services/services.dart';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 
@@ -13,20 +13,20 @@ class TransactionCubit extends Cubit<TransactionState> {
         await TransactionServices.getTransactions();
 
     if (result.value != null) {
-      emit(TransactionLoaded(result.value));
+      emit(TransactionLoaded(result.value!));
     } else {
       emit(TransactionLoadingFailed(result.message));
     }
   }
 
-  Future<String> submitTransaction(Transaction transaction) async {
+  Future<Uri?> submitTransaction(Transaction transaction) async {
     ApiReturnValue<Transaction> result =
         await TransactionServices.submitTransaction(transaction);
 
     if (result.value != null) {
       emit(TransactionLoaded(
-          (state as TransactionLoaded).transactions + [result.value]));
-      return result.value.paymentUrl;
+          (state as TransactionLoaded).transactions + [result.value!]));
+      return result.value!.paymentUrl;
     } else {
       return null;
     }

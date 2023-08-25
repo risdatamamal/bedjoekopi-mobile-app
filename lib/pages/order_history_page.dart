@@ -26,7 +26,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
 
           return RefreshIndicator(
             onRefresh: () async {
-              await context.bloc<TransactionCubit>().getTransactions();
+              await context.read<TransactionCubit>().getTransactions();
             },
             child: ListView(
               children: [
@@ -102,7 +102,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                             onTap: () async {
                                               if (e.status ==
                                                   TransactionStatus.pending) {
-                                                await launch(e.paymentUrl);
+                                                await launchUrl(e.paymentUrl!);
                                               }
                                             },
                                             child: OrderListItem(

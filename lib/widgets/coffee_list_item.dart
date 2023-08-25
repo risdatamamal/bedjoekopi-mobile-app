@@ -2,9 +2,9 @@ part of 'widgets.dart';
 
 class CoffeeListItem extends StatelessWidget {
   final Coffee coffee;
-  final double itemWidth;
+  final double? itemWidth;
 
-  CoffeeListItem({@required this.coffee, this.itemWidth});
+  CoffeeListItem({required this.coffee, this.itemWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class CoffeeListItem extends StatelessWidget {
                   image: NetworkImage(coffee.picturePath), fit: BoxFit.cover)),
         ),
         SizedBox(
-          width: itemWidth - 182, // 60 + 12 + 110
+          width: itemWidth! - 182, // 60 + 12 + 110
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

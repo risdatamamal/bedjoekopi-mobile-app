@@ -2,7 +2,7 @@ part of 'services.dart';
 
 class CoffeeServices {
   static Future<ApiReturnValue<List<Coffee>>> getCoffees(
-      {http.Client client}) async {
+      {http.Client? client}) async {
     client ??= http.Client();
 
     String url = baseURL + 'coffee';
@@ -10,7 +10,7 @@ class CoffeeServices {
     var response = await client.get(Uri.parse(url));
 
     if (response.statusCode != 200) {
-      return ApiReturnValue(message: 'Please try again');
+      return ApiReturnValue(message: 'Please try again', value: []);
     }
 
     var data = jsonDecode(response.body);
@@ -19,6 +19,6 @@ class CoffeeServices {
         .map((e) => Coffee.fromJson(e))
         .toList();
 
-    return ApiReturnValue(value: coffees);
+    return ApiReturnValue(value: coffees, message: 'Success');
   }
 }

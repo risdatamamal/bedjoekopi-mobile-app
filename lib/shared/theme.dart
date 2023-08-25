@@ -3,6 +3,7 @@ part of 'shared.dart';
 Color mainColor = "FFC700".toColor();
 Color secColor = "020202".toColor();
 Color greyColor = "8D92A3".toColor();
+Color whiteColor = "FFFFFF".toColor();
 
 Widget loadingIndicator = SpinKitFadingCircle(
   size: 45,

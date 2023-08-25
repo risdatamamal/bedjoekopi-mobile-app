@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:coffeeshop/cubit/cubit.dart';
-import 'package:coffeeshop/models/models.dart';
-import 'package:coffeeshop/shared/shared.dart';
-import 'package:coffeeshop/widgets/widgets.dart';
+import 'package:bedjoekopi/cubit/cubit.dart';
+import 'package:bedjoekopi/models/models.dart';
+import 'package:bedjoekopi/shared/shared.dart';
+import 'package:bedjoekopi/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

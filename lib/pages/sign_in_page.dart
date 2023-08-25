@@ -79,19 +79,19 @@ class _SignInPageState extends State<SignInPage> {
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               child: isLoading
                   ? loadingIndicator
-                  : RaisedButton(
+                  : ElevatedButton(
                       onPressed: () async {
                         setState(() {
                           isLoading = true;
                         });
 
-                        await context.bloc<UserCubit>().signIn(
+                        await context.read<UserCubit>().signIn(
                             emailController.text, passwordController.text);
-                        UserState state = context.bloc<UserCubit>().state;
+                        UserState state = context.read<UserCubit>().state;
 
                         if (state is UserLoaded) {
-                          context.bloc<CoffeeCubit>().getCoffees();
-                          context.bloc<TransactionCubit>().getTransactions();
+                          context.read<CoffeeCubit>().getCoffees();
+                          context.read<TransactionCubit>().getTransactions();
                           Get.to(MainPage());
                         } else {
                           Get.snackbar("", "",
@@ -115,10 +115,11 @@ class _SignInPageState extends State<SignInPage> {
                           });
                         }
                       },
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24)),
-                      color: mainColor,
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)),
+                          backgroundColor: mainColor),
                       child: Text(
                         'Sign In',
                         style: GoogleFonts.poppins(
@@ -127,7 +128,7 @@ class _SignInPageState extends State<SignInPage> {
                     )),
           Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 24),
+              margin: EdgeInsets.only(top: 12),
               height: 45,
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               child: isLoading
@@ -135,18 +136,19 @@ class _SignInPageState extends State<SignInPage> {
                       size: 45,
                       color: mainColor,
                     )
-                  : RaisedButton(
+                  : ElevatedButton(
                       onPressed: () {
                         Get.to(() => SignUpPage());
                       },
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24)),
-                      color: greyColor,
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)),
+                          backgroundColor: greyColor),
                       child: Text(
                         'Create New Account',
                         style: GoogleFonts.poppins(
-                            color: Colors.white, fontWeight: FontWeight.w500),
+                            color: whiteColor, fontWeight: FontWeight.w500),
                       ),
                     )),
           Container(
@@ -159,14 +161,15 @@ class _SignInPageState extends State<SignInPage> {
                       size: 45,
                       color: mainColor,
                     )
-                  : RaisedButton(
+                  : ElevatedButton(
                       onPressed: () {
                         Get.to(() => ForgotPasswordPage());
                       },
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24)),
-                      color: Colors.transparent,
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)),
+                          backgroundColor: whiteColor),
                       child: Text(
                         'Forget Password',
                         style: GoogleFonts.poppins(

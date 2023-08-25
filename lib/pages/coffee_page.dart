@@ -47,9 +47,9 @@ class _CoffeePageState extends State<CoffeePage> {
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
                             image: NetworkImage(
-                                (context.bloc<UserCubit>().state as UserLoaded)
+                                (context.read<UserCubit>().state as UserLoaded)
                                     .user
-                                    .picturePath),
+                                    .picturePath ?? ''),
                             fit: BoxFit.cover)),
                   ),
                 ],
@@ -78,7 +78,7 @@ class _CoffeePageState extends State<CoffeePage> {
                                               transaction: Transaction(
                                                 coffee: e,
                                                 user: (context
-                                                        .bloc<UserCubit>()
+                                                        .read<UserCubit>()
                                                         .state as UserLoaded)
                                                     .user,
                                               ),
@@ -145,7 +145,7 @@ class _CoffeePageState extends State<CoffeePage> {
                                       Get.to(CoffeeDetailsPage(
                                         transaction: Transaction(
                                           coffee: e,
-                                          user: (context.bloc<UserCubit>().state
+                                          user: (context.read<UserCubit>().state
                                                   as UserLoaded)
                                               .user,
                                         ),
